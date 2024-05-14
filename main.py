@@ -32,14 +32,16 @@ def convertir_log_a_sql(log):
     for username, stats in estadisticas.items():
         sql = f"UPDATE {tabla} SET "
         for clave, valor in stats.items():
+            if clave == "POINTS":
+                clave = "ANOTED_POINTS"
             sql += f"{clave} = {clave} + {valor}, "
-        sql = sql.rstrip(", ") + f" WHERE username = '{username}';"
+        sql = sql.rstrip(", ") + f" WHERE PlayerName = '{username}';"
         sql_commands.append(sql)
 
     return sql_commands
 
-# Pedir al usuario que ingrese el nombre del archivo .txt
-nombre_archivo = input("Ingrese el nombre del archivo .txt: ")
+# Pedir al usuario que ingrese el nombre del archivo
+nombre_archivo = input("Ingrese el nombre del archivo: ")
 
 # Intentar abrir el archivo y leer su contenido
 try:
